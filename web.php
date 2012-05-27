@@ -117,10 +117,10 @@ nav a.readed h3{
     font-weight: normal;
 }
 nav a.readed{
-    background:white url("read.png") no-repeat 270px 30px;
+    background:white url("image/read.png") no-repeat 270px 30px;
 }
 nav ul a.readed:hover{
-    background:#F5F5F5 url("read.png") no-repeat 270px 30px;
+    background:#F5F5F5 url("image/read.png") no-repeat 270px 30px;
 }
 nav ul a:hover{
     background:#F5F5F5;
@@ -652,7 +652,7 @@ $("#allReaded").click(function(){
 	<div id="left-pane">
         <!--header区域包括logo以及返回选项-->
         <header>
-            <img src="logo.png" alt="Kindle阅读" />
+            <img src="image/logo.png" alt="Kindle阅读" />
             <span><a href="logout.php">退出</a></span>
         </header>
         <!--div#select包括条目，订阅，以及搜索功能-->
@@ -766,7 +766,7 @@ foreach($resultRss as $row){
             <h3>作者：keso 发表时间：2012-05-07 19:42:11 <a href="#" target="_blank">查看原文</a></h3>
         </header>
         <section>
-            <img id="up" src="up.png" alt="" />
+            <img id="up" src="image/up.png" alt="" />
         	<div class="entry">
             <a href="javascript:void(0);" onclick="Evernote.doClip({contentId:'answer-content',providerName:'知乎阅读',title:'为什么芬兰，挪威，罗马尼亚等原轴心国在现在基本不会被提到他们原来的战犯史？',url:'http://www.zhihu.com/question/20109279/answer/14016024'}); return false;"> Evernote &nbsp;</a>
 			</div>
