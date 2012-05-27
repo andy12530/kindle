@@ -34,7 +34,7 @@ article{
     height:360px;
     width:500px;
     border-radius:8px;
-    background-image:url("kindle.png");
+    background-image:url("image/kindle.png");
     display: inline-block;
     float:left;
 }
@@ -97,12 +97,12 @@ span{
     display:none;
 }
 span.accept{
-    background-image: url("accept.png");
+    background-image: url("image/accept.png");
     color: green;
     display:inline-block;
 }
 span.error{
-    background-image: url("error.png");
+    background-image: url("image/error.png");
     color: red;
     display:inline-block;
 }
@@ -292,7 +292,7 @@ $("#submit1").click(function(){
 </head>
 <body>
 <header>
-    <div id="logo"><img src="logo2.png" alt="" /></div>
+    <div id="logo"><img src="image/logo2.png" alt="" /></div>
 </header>
 
 <section>
