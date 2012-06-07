@@ -2,33 +2,36 @@
 session_start();
 if(isset($_SESSION['user'])){
     $user = $_SESSION['user'];
+} else{
+    header('Location: index.php');
+}
 ?>
 <!DOCTYPE HTML>
 <html lang="en-US">
 <head>
 <meta charset="UTF-8">
-<title>Web阅读（双栏目）</title>
-<style type="text/css">
+<title>Web阅读（双栏目）</title>
+<style type="text/css">
 body{
-    font-family:"Hiragino Sans GB", "Helvetica Neue", Helvetica,Sans-serif;
-    background-color: #474747;
-}
-#reader{
-    margin:0;
-    padding:0;
-    border:none;
-    outline:none;
-    text-decoration: none;
-}
-#left-pane{
-    background:#E7EBEF;
-    width:320px;
-    position:fixed;
-    left:0;
-    top:0;
+    /*font-family:"Hiragino Sans GB", "Helvetica Neue", Helvetica, Arial, Sans-serif;*/
+    background-color: #474747;
+}
+#reader{
+    margin:0;
+    padding:0;
+    border:none;
+    outline:none;
+    text-decoration: none;
+}
+#left-pane{
+    background:#F2F2F2;
+    width:325px;
+    position:fixed;
+    left:0;
+    top:0;
 }
 #left-pane header{
-    padding:19px;
+    padding:20px;
     height:35px;
     background:#C8CFD4;
     background:-webkit-gradient(linear,0% 0%, 0% 100%, from(#DFE3E6), to(#B7C0C7));
@@ -36,6 +39,7 @@ body{
     background:linear-gradient(top, #DFE3E6, #B7C0C7);
 }
 #left-pane header span{
+    /*float: right;*/
     position: relative;
     left: 30px;
     top: -16px;
@@ -68,7 +72,7 @@ body{
     padding:0;
     margin:0;
     /*这是直接用float:left，不兼容IE7*/
-    width: 168px;
+    overflow:hidden;
     position: relative;
     left: 120px;
     top: -30px;
@@ -179,7 +183,7 @@ nav ul li p{
 #left-pane li.cur a{
     background-color: #DDD!important;
     -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15) inset!important;
-    color: #51A436;
+    color: #079947;
 }
 
 
@@ -264,58 +268,61 @@ div#topControl{
 
 
 
-
-#right-pane{
-    position:fixed;
-    top:5px;
-    left:321px;
-    background: #F3F2EE;
-    width:850px;
+
+#right-pane{
+    position:fixed;
+    top:5px;
+    left:326px;
+    background: #F2F2F2;
+    width:850px;
     border-radius:6px;
-    height:100%;
-}
-#right-pane header{
-    color:#999;
-    border-bottom:2px solid #BFBFBF;
+    height:100%;
 }
-#right-pane header h1{
-    line-height:50px;
-    font-size:24px;
-    padding:0 50px;
-    margin:0;
-    text-align: center;
-    text-shadow:0 1px 0 white;
-    color: #222;
-}
-#right-pane header h3 {
-    margin: 0;
-    font-size: 15px;
-    text-align: center;
+#right-pane header{
+    color:#999;
+    border-bottom:2px solid #BFBFBF;
+}
+#right-pane header h1{
+    line-height:30px;
+    font-size:22px;
+    padding:10px 50px;
+    margin:0;
+    text-align: center;
+    text-shadow:0 1px 0 white;
+    color: #222;
+}
+#right-pane header h3 {
+    margin: 0;
+    font-size: 15px;
+    text-align: center;
 }
 #right-pane header h3 a{
-    color:#038543;
-}
-section{
-    padding:30px 50px 30px ;
+    color:#508B88;
+}
+section{
+    padding:30px 50px 30px ;
     overflow-y: auto;
-    overflow-x: hidden;
-    font-size: 15px;
-    color: #666;
-    text-shadow: 0 1px 0 white;
-    height:508px;/*默认高度为此，JS会动态改变此值*/
-}
-section a{
-    color:#038543;
-    text-decoration:none;
-}
-section div.entry{
-    border:1px solid #C5CACE;
-    border-radius:6px;
+    overflow-x: hidden;
+    font-size: 15px;
+    color: #666;
+    height:508px;/*默认高度为此，JS会动态改变此值*/
+}
+section a{
+    color:#508B88;;
+    text-decoration:none;
+}
+#right-pane header h3 a:hover,section a:hover{
+    color:#F04530;
+}
+section div.entry{
+    border:1px solid #C5CACE;
+    border-radius:6px;
     background:#FFF;
     color:#333;
     padding:20px 45px 30px 45px;
-    word-wrap: break-word;
-
+    word-wrap: break-word;
+    letter-spacing: 1px;
+    line-height:25px;
 }
 #addRSS{
     height: 70px;
@@ -361,7 +368,7 @@ section div.entry{
     cursor:pointer;
     display:none;
 }
-article,aside,dialog,footer,header,section,footer,nav,menu{display:block}
+article,aside,dialog,footer,header,section,footer,nav,menu{display:block}
 </style>
 <!–[if lt IE9]> 
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -378,9 +385,11 @@ $(window).resize(function(){
     $("nav ul").height(clientHeight - 133);
     $("section").height(clientHeight-$("#right-pane header").height()-67);
 });
-//遮罩的大小
-$("div#delete").height(clientHeight);
-$("div#delete").width(document.documentElement.clientWidth);
+//遮罩的大小函数
+function setDeleteSize(){
+    $("div#delete").height(clientHeight);
+    $("div#delete").width(document.documentElement.clientWidth);
+}
 //如果用户登录后没有条目，删除#showMore标签
 if($("nav.list ul li").length === 1){
     $("#showMore").remove();
@@ -460,7 +469,7 @@ $("#rss").click(function(){
 
 
 $("#search").click(function(){
-    alert("抱歉，此项功能暂未开放，敬请期待……");
+    alert("我现在罢工，先找Google去……");
 });
 
 //这里使用live事件
@@ -482,7 +491,7 @@ $("nav.list li, nav.rssList ul li:not(#top)").live("click",function(){
         //回顶
         $("section").scrollTop(0);
         //调整正文高度
-        $("section").height(clientHeight-$("#right-pane header").height()-67);
+        $("section").height(document.documentElement.clientHeight-$("#right-pane header").height()-67);
         //添加图片缩放功能
         for(var i=0; i<$("div.entry img").length; i++){
             if($("div.entry img:eq("+i+")").width()>600){
@@ -525,6 +534,7 @@ $("#addRSS input").blur(function(){
 
 //添加订阅源
 $("#addRSS button").bind("click",function(){
+    setDeleteSize();//设置delete元素大小
     var feed =$("#addRSS input").val();
     if(feed.length < 6){
         alert("订阅源地址不合法");
@@ -564,6 +574,7 @@ $("#addRSS button").bind("click",function(){
 });
 //退订源
 $("nav.rss ul li span").live("click",function(){
+    setDeleteSize();//设置delete元素大小
     var rssName = $(this).prev().children().text();
     var rssId = $(this).prev().attr("id");
     $("div#delete").css("display","block");
@@ -760,23 +771,18 @@ foreach($resultRss as $row){
         <button value="OK">确定</button><button value="cancel">取消</button>
     </div>
     
-    <article id="right-pane">
-        <header>
-            <h1>从 1998 年至今，互联网行业都有哪些观念上的变化？</h1>
-            <h3>作者：keso 发表时间：2012-05-07 19:42:11 <a href="#" target="_blank">查看原文</a></h3>
-        </header>
+    <article id="right-pane">
+        <header>
+            <h1>从 1998 年至今，互联网行业都有哪些观念上的变化？</h1>
+            <h3>作者：keso 发表时间：2012-05-07 19:42:11 <a href="#" target="_blank">查看原文</a></h3>
+        </header>
         <section>
             <img id="up" src="image/up.png" alt="" />
         	<div class="entry">
-            <a href="javascript:void(0);" onclick="Evernote.doClip({contentId:'answer-content',providerName:'知乎阅读',title:'为什么芬兰，挪威，罗马尼亚等原轴心国在现在基本不会被提到他们原来的战犯史？',url:'http://www.zhihu.com/question/20109279/answer/14016024'}); return false;"> Evernote &nbsp;</a>
-			</div>
-        </section>
+            <a href="javascript:void(0);" onclick="Evernote.doClip({contentId:'answer-content',providerName:'知乎阅读',title:'为什么芬兰，挪威，罗马尼亚等原轴心国在现在基本不会被提到他们原来的战犯史？',url:'http://www.zhihu.com/question/20109279/answer/14016024'}); return false;"> Evernote &nbsp;</a>
+			</div>
+        </section>
     </article>
 </div>	
 </body>
 </html>
-<?php
-} else{
-    header('Location: index.php');
-}
-?>

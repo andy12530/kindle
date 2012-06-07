@@ -58,13 +58,15 @@ if(isset($_POST['emailValue'])){
 if(isset($_POST['user']) && isset($_POST['pass'])){
     $userName = safe($_POST['user']);
     $pwd = safe($_POST['pass']);
-    $st = $db->prepare("SELECT COUNT(*) FROM users WHERE userName=? AND pwd =?");
+    $st = $db->prepare("SELECT COUNT(access_token) result_sum, access_token FROM users WHERE userName=? AND pwd =?");
     $st->execute(array($userName,sha1($pwd) ));
-    $st_Num = $st->fetchColumn();
-    if($st_Num == 1){
+    $st_result = $st->fetchAll();
+    if($st_result[0]['result_sum'] == 1){
         $data = array("result" => "succeed");
         session_start();
         $_SESSION['user'] = $userName;
+        //在这里读取用户GR授权信息
+        $_SESSION['access_token'] = $st_result[0]['access_token'];
     } else{
         $data = array("result" => "false");
     }

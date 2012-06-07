@@ -163,6 +163,7 @@ $(window).resize(function(){
 
 //表单默认文字颜色
 $("input:not(input:submit)").focus(function(){
+    $(this).css("color","#333");
     var txtValue = $(this).val();
     if(txtValue == this.defaultValue){
         $($(this).val(""));
@@ -259,12 +260,15 @@ $("#submit2").click(function(){
 });
 //摇头函数
 function shake(inputType){
-    $("#"+inputType).animate({left:"50px"},70);
+    if ($("#"+inputType).is(":animated")){
+      return ;
+    }
+    $("#"+inputType).animate({left:"60px"},70);
     $("#"+inputType).css("border","2px solid red");
-    $("#"+inputType).animate({left:"-50px"},140);
+    $("#"+inputType).animate({left:"-60px"},140);
     $("#"+inputType).animate({left:"0px"},70);
-    $("#"+inputType).animate({left:"50px"},50);
-    $("#"+inputType).animate({left:"-50px"},100);
+    $("#"+inputType).animate({left:"60px"},50);
+    $("#"+inputType).animate({left:"-60px"},100);
     $("#"+inputType).animate({left:"0px"},50);
 }
 //登录处理
@@ -281,7 +285,7 @@ $("#submit1").click(function(){
             location='web.php';
         } else{
             var pass = $("#password").val("");
-            shake();
+            shake("password");
         }
     },"json");
     return false;
@@ -307,7 +311,7 @@ $("#submit1").click(function(){
         </div>
         <div id="sigin" class="form">
         <h2>新用户？注册一下吧</h2>
-        	<form action="/register/register.php" method="post">
+        	<form action="register/register.php" method="post">
                 <input type="text" name="username2" id="username2" value="您的用户名【至少6位】" />
                 <span>可用</span>
                 <input type="password" name="password2" id="password2" placeholder="密码【至少6位】" />

@@ -37,6 +37,7 @@ function initRss($rssLink, $user){
     $feed = new SimplePie();
     $feed->set_feed_url($rssLink); //feed地址做参数进行解析操作
     $feed->set_timeout(30);
+    $feed->enable_cache(false);
     $feed->init();
     if($feed->error()){
         //feed地址错误
